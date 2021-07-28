@@ -45,12 +45,25 @@
                   <input class="input is-medium" type="text" id="noteTitle">
                 </div>
               </div>
+
+              <div class="field">
+                <label class="label">Labels</label>
+                <div class="control">
+                  <input class="input is-medium" type="text" id="noteLabel" onchange = "updateLabel()">
+                </div>
+              </div>
+
+              <div id = "labels" style = "margin: 5px">
+
+              </div>
+
               <div class="field">
                 <label class="label">Note</label>
                 <div class="control">
                   <textarea class="textarea is-medium" id="noteText"></textarea>
                 </div>
               </div>
+
               <div class="control">
                 <button class="button is-link is-fullwidth has-text-weight-medium is-medium" onclick="handleNoteSubmit()">Create Note</button>
               </div>
@@ -60,6 +73,6 @@
         </div>
       </div>
     </section>
-
+    <script src = "/js/writeNote.js"></script>
   </body>
 </html>

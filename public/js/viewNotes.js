@@ -12,6 +12,20 @@ window.onload = (event) => {
     });
 }
 
+
+
+const updateLabels = (event) => {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log(user.displayName);
+            googleUser = user;
+            getNotes(user.uid)
+        }
+        else
+            window.location = "index.html";
+    });
+}
+
 function getNotes(userId) {
     const notesRef = firebase.database().ref(`users/${userId}`)
     notesRef.on('value', (db) => {
@@ -22,20 +36,19 @@ function getNotes(userId) {
 }
 
 function renderData(data) {
-    console.log(data);
+    // console.log(data);
     // var html = ""
+    const labelSearch = document.querySelector("#labelSearch").value
+    // console.log(labelSearch)
 
     for (const dataKey in data) {
         const note = data[dataKey]
-        // console.log(note)
-        // html += renderCard(note)
-        // document.querySelector("#app").innerHTML = html;
-
-        document.querySelector("#app").appendChild(dynamicRender(note));       
-        console.log(document.querySelector("#app").innerHTML)
+        console.log(labelSearch)
+        if (containsLabel(note, labelSearch))
+            document.querySelector("#app").appendChild(dynamicRender(note));  
+            
+        // document.querySelector("#app").appendChild(dynamicRender(note));  
     }
-    
-
 }
 
 function renderCard(note) {
@@ -64,13 +77,15 @@ const dynamicRender = (note) => {
     cardDiv.classList.add('card')
     cardDiv.style = (`color: rgb(${randomColor()}); background-color: rgb(${randomColor()})`)
 
-
     const headerDiv = document.createElement('header')
     headerDiv.classList.add('card-header')
+    headerDiv.style = (`color: rgb(${randomColor()}); background-color: rgb(${randomColor()})`)
 
     const span = document.createElement("span")
     span.classList.add("card-header-title")
     span.innerText = note.title + ": " + googleUser.displayName
+    span.style = (`color: rgb(${randomColor()}); background-color: rgb(${randomColor()})`)
+
 
     const cardContentDiv = document.createElement("div")
     cardContentDiv.classList.add("card-content")
@@ -87,7 +102,7 @@ const dynamicRender = (note) => {
 
     upperDiv.appendChild(cardDiv)
 
-    console.log(upperDiv)
+    // console.log(upperDiv)
     return upperDiv;
 }
 
@@ -97,4 +112,21 @@ function randomColor() {
     var b = Math.random() * 255
 
     return r + "," + g + "," + b
+}
+
+function containsLabel(note, labelSearch) {
+    // console.log(note)
+    // console.log(note.labels)
+    console.log(labelSearch)
+
+    for (label in note.labels) {
+        
+        labelData = note.labels[label];
+        console.log(labelData)
+        
+        if (labelData == labelSearch)
+            return true;
+    }
+
+    return false;
 }
