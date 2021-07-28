@@ -75,16 +75,16 @@ const dynamicRender = (note) => {
 
     const cardDiv = document.createElement('div')
     cardDiv.classList.add('card')
-    cardDiv.style = (`color: rgb(${randomColor()}); background-color: rgb(${randomColor()})`)
+    cardDiv.style = (`color: hsl(${randomColor()}); background-color: hsl(${randomColor()})`)
 
     const headerDiv = document.createElement('header')
     headerDiv.classList.add('card-header')
-    headerDiv.style = (`color: rgb(${randomColor()}); background-color: rgb(${randomColor()})`)
+    headerDiv.style = (`color: hsl(${randomColor()}); background-color: hsl(${randomColor()})`)
 
     const span = document.createElement("span")
     span.classList.add("card-header-title")
     span.innerText = note.title + ": " + googleUser.displayName
-    span.style = (`color: rgb(${randomColor()}); background-color: rgb(${randomColor()})`)
+    span.style = (`color: hsl(${randomColor()}); background-color: hsl(${randomColor()})`)
 
 
     const cardContentDiv = document.createElement("div")
@@ -107,11 +107,11 @@ const dynamicRender = (note) => {
 }
 
 function randomColor() {
-    var r = Math.random() * 255
-    var g = Math.random() * 255
-    var b = Math.random() * 255
+    var h = Math.random() * 360
+    var s = 75
+    var l = 75
 
-    return r + "," + g + "," + b
+    return h + "," + s + "%," + l + "%"
 }
 
 function containsLabel(note, labelSearch) {
